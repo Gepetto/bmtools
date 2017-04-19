@@ -57,21 +57,23 @@ def computeFirstSecondDerivatives(model, q, time):
     # Numerical differentiation: 1st order                        
     dq = np.asmatrix(np.zeros([tmax, model.nv]))
     tslices = np.zeros(tmax)
+    tslices[0] = np.float64(t[1]-t[0])
+    tslices[-1] = np.float64(t[-1]-t[-2])
+    
+    # interior
     for i in range(1,tmax-1):
         tslices[i] = np.float64(t[i+1]-t[i-1])
         dq[i] = (se3.differentiate(model, q[i-1],  q[i+1]) / tslices[i]).T
     
-    tslices[0] = np.float64(t[1]-t[0])
+    # boundaries
     dq[0] = (se3.differentiate(model, q[0],  q[1]) / tslices[0]).T
-    tslices[-1] = np.float64(t[-1]-t[-2])
     dq[-1] = (se3.differentiate(model, q[-2],  q[-1]) / tslices[-1]).T
     
     # Numerical differentiation: 2nd order
-    np.diff(t[1:-1])
     ddq = np.asmatrix(np.zeros([tmax, model.nv]))
     for q in range(0, model.nv):
         ddq[:,q] = np.asmatrix(np.gradient(dq[:,q].A1, tslices)).T
-        
+    
     return dq, ddq
 
 
