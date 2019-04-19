@@ -1,0 +1,6 @@
+include LICENSE
+include README.md
+include bmtools/__init__.py
+include bmtools/algebra.py
+include bmtools/filters.py
+include bmtools/processing.py
