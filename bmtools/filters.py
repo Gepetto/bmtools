@@ -1,5 +1,4 @@
-from scipy.signal import butter, lfilter, filtfilt
-from scipy.signal import freqs
+from scipy.signal import butter, filtfilt, lfilter
 
 
 def butter_lowpass(cutOff, fs, order=4):
